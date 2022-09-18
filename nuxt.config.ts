@@ -1,4 +1,9 @@
-export default {
+import { defineNuxtConfig } from '@nuxt/bridge'
+// Import FontAwesome icons
+import { faGlobeAfrica, faEnvelope, faPaw } from '@fortawesome/free-solid-svg-icons'
+
+export default defineNuxtConfig({
+  // Your existing configuration
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
@@ -32,7 +37,7 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/typescript
-    '@nuxt/typescript-build',
+    // '@nuxt/typescript-build',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -42,7 +47,21 @@ export default {
     // https://go.nuxtjs.dev/emotion
     '@nuxtjs/emotion',
   ],
+  chakra: {
+    icons: {
+      // Here we state that we use `fa`
+      // icons library for Chakra's
+      // internal icon parser
+      iconPack: 'fa',
+      iconSet: {
+        faGlobeAfrica,
+        faEnvelope,
+        faPaw
+      }
+    }
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
-}
+
+})
