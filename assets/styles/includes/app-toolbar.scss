@@ -1,0 +1,22 @@
+.layout-wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+
+  .nuxt-content {
+    flex-grow: 2;
+  }
+}
+
+.app-toolbar {
+  background: grey;
+  padding: 1em;
+  height: 3em;
+
+  a {
+    color: #fff;
+    padding: 1em;
+    font-weight: bold;
+  }
+}

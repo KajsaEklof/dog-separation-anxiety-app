@@ -1,4 +1,8 @@
-# dog-app
+# Dog Separation Anxiety Training App
+
+This is a personal project for my families dog to manage his Separation Anxiety training.
+
+The app is not (yet) pretty, but it works.
 
 ## Build Setup
 

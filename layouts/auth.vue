@@ -2,16 +2,9 @@
   <div class="container">
     <CThemeProvider>
       <CColorModeProvider>
-        <CBox
-          font-family="body"
-          as="main"
-          class="layout-wrapper"
-        >
+        <CBox font-family="body" as="main">
           <CReset />
-          <div class="nuxt-content">
-            <Nuxt />
-          </div>
-          <app-toolbar />
+          <Nuxt />
         </CBox>
       </CColorModeProvider>
     </CThemeProvider>
@@ -24,17 +17,14 @@ import {
   CReset,
   CBox,
 } from '@chakra-ui/vue';
-import AppToolbar from '@/components/AppToolbar.vue';
 
 export default {
   name: 'DefaultLayout',
   components: {
-    AppToolbar,
     CThemeProvider,
     CColorModeProvider,
     CReset,
     CBox,
   },
-  middleware: ['auth', 'hasPet'],
 };
 </script>
