@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container main-wrapper">
     <c-stack align="center">
       <c-button
         variant-color="red"

@@ -1,12 +1,47 @@
-.layout-wrapper {
-  height: 100vh;
+// body {
+//   min-height: 100vh;
+//   min-height: -webkit-fill-available;
+
+//   main {
+//     flex: 1;
+//   }
+// }
+// html {
+//   height: -webkit-fill-available;
+// }
+
+// #__chakra-app {
+//   display: flex;
+//   flex-direction: column;
+//   margin: 0;
+//   min-height: 100vh;
+// }
+
+// .layout-wrapper {
+//   display: flex;
+//   flex-direction: column;
+//   overflow: auto;
+
+//   .nuxt-content {
+//     flex: 1;
+//   }
+// }
+
+// html {
+//   height: -webkit-fill-available;
+// }
+
+.nuxt-content {
   display: flex;
   flex-direction: column;
-  overflow: auto;
+  margin: 0;
+  min-height: 100vh;
+  // min-height: -webkit-fill-available;
+  /* mobile viewport bug fix */
+}
 
-  .nuxt-content {
-    flex-grow: 2;
-  }
+.main-wrapper {
+  flex: 1;
 }
 
 .app-toolbar {

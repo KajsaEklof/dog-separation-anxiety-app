@@ -1,21 +1,17 @@
 <template>
-  <div class="container">
-    <CThemeProvider>
-      <CColorModeProvider>
-        <CBox
-          font-family="body"
-          as="main"
-          class="layout-wrapper"
-        >
-          <CReset />
-          <div class="nuxt-content">
-            <Nuxt />
-          </div>
+  <!-- <div class="container"> -->
+  <CThemeProvider>
+    <CColorModeProvider>
+      <CBox font-family="body" class="layout-wrapper">
+        <CReset />
+        <div class="nuxt-content">
+          <Nuxt />
           <app-toolbar />
-        </CBox>
-      </CColorModeProvider>
-    </CThemeProvider>
-  </div>
+        </div>
+      </CBox>
+    </CColorModeProvider>
+  </CThemeProvider>
+  <!-- </div> -->
 </template>
 <script>
 import {
