@@ -1,17 +1,15 @@
 <template>
-  <!-- <div class="container"> -->
   <CThemeProvider>
     <CColorModeProvider>
       <CBox font-family="body" class="layout-wrapper">
         <CReset />
+        <app-toolbar />
         <div class="nuxt-content">
           <Nuxt />
-          <app-toolbar />
         </div>
       </CBox>
     </CColorModeProvider>
   </CThemeProvider>
-  <!-- </div> -->
 </template>
 <script>
 import {

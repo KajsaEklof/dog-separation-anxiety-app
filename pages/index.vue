@@ -1,6 +1,13 @@
 <template>
-  <div class="container main-wrapper">
+  <main class="main-wrapper">
     <c-stack align="center">
+      <c-heading
+        >Current target duration for
+        {{ dogName }}:</c-heading
+      >
+      <c-heading as="h3">{{ targetDuration }}</c-heading>
+    </c-stack>
+    <c-stack align="end">
       <c-button
         variant-color="red"
         outline
@@ -8,11 +15,7 @@
         >Logout</c-button
       >
     </c-stack>
-    <c-stack align="center">
-      <c-heading>Current target duration:</c-heading>
-      <c-heading as="h3">{{ targetDuration }}</c-heading>
-    </c-stack>
-  </div>
+  </main>
 </template>
 
 <script lang="ts" setup>
@@ -29,6 +32,7 @@ const { logout } = useAuthUser();
 const router = useRouter();
 
 const targetDuration = ref('');
+const dogName = ref('');
 const petStore = usePetStore();
 const { setPet } = petStore;
 const { getPet } = usePetIdentity();
@@ -49,8 +53,8 @@ async function getDog(): Promise<void> {
       targetDuration: pet.data[0].target_duration,
     };
 
-    console.log('setting pet data', data);
     setPet(data);
+    dogName.value = data.name;
   }
 }
 

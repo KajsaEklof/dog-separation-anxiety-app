@@ -1,7 +1,7 @@
 import { defineNuxtConfig } from '@nuxt/bridge'
 // Import FontAwesome icons
-// import { faGlobeAfrica, faEnvelope, faPaw } from '@fortawesome/free-solid-svg-icons'
-// import customTheme from './assets/custom-theme'
+import { faEnvelope, faPaw, faDumbbell, faHouseChimney, faChartLine, faStopwatch } from '@fortawesome/free-solid-svg-icons'
+import customTheme from './assets/custom-theme'
 
 export default defineNuxtConfig({
   // Your existing configuration
@@ -54,30 +54,34 @@ export default defineNuxtConfig({
     // https://go.nuxtjs.dev/emotion
     '@nuxtjs/emotion',
     '@pinia/nuxt',
+    'nuxt-icon'
   ],
-  // chakra: {
-  //   icons: {
-  //     // Here we state that we use `fa`
-  //     // icons library for Chakra's
-  //     // internal icon parser
-  //     iconPack: 'fa',
-  //     iconSet: {
-  //       faGlobeAfrica,
-  //       faEnvelope,
-  //       faPaw
-  //     }
-  //   },
-  //   extendTheme: customTheme,
-  //   // extendTheme: {
-  //   //   colors: {
-  //   //     stone: '#CAD2C5',
-  //   //     apple: '#84A98C',
-  //   //     sage: '#52796F',
-  //   //     teal: '#354F52',
-  //   //     navy: '#2F3E46'
-  //   //   }
-  //   // }
-  // },
+  chakra: {
+    icons: {
+      // Here we state that we use `fa`
+      // icons library for Chakra's
+      // internal icon parser
+      iconPack: 'fa',
+      iconSet: {
+        faEnvelope,
+        faPaw,
+        faDumbbell,
+        faHouseChimney,
+        faChartLine,
+        faStopwatch
+      }
+    },
+    extendTheme: customTheme,
+    // extendTheme: {
+    //   colors: {
+    //     stone: '#CAD2C5',
+    //     apple: '#84A98C',
+    //     sage: '#52796F',
+    //     teal: '#354F52',
+    //     navy: '#2F3E46'
+    //   }
+    // }
+  },
 
   router: {
     middleware: ['auth']
