@@ -1,0 +1,7 @@
+{
+  "name": "Dog Log",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
