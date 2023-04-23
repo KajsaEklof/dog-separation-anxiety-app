@@ -1030,23 +1030,6 @@
   "resolved" "https://registry.npmjs.org/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz"
   "version" "1.2.1"
 
-"@ionic/core@7.0.2":
-  "integrity" "sha512-GxQsMmsyBGeK9khIPNR3zw3WvDZj3I0inKtPcd/s9hEnfndAlFFI9gckB7/zrp55xoknCRwqAYT8sGWze3sn2w=="
-  "resolved" "https://registry.npmjs.org/@ionic/core/-/core-7.0.2.tgz"
-  "version" "7.0.2"
-  dependencies:
-    "@stencil/core" "^3.2.1"
-    "ionicons" "^7.1.0"
-    "tslib" "^2.1.0"
-
-"@ionic/vue@^7.0.2":
-  "integrity" "sha512-tPVUS/0mVCpRr2o7JVgv7csYocOMhU96yT8+bAG5qefdFD0gz/9IENXXe1jqrp4qtNyqWsoj+J3OmJH/9A+xgw=="
-  "resolved" "https://registry.npmjs.org/@ionic/vue/-/vue-7.0.2.tgz"
-  "version" "7.0.2"
-  dependencies:
-    "@ionic/core" "7.0.2"
-    "ionicons" "^7.0.0"
-
 "@jridgewell/gen-mapping@^0.3.0", "@jridgewell/gen-mapping@^0.3.2":
   "integrity" "sha512-HLhSWOLRi875zjjMG/r+Nv0oCW8umGb0BgEhyX3dDX3egwZtB8PqLnjz3yedt8R5StBrzcg4aBpnh8UA9D1BoQ=="
   "resolved" "https://registry.npmjs.org/@jridgewell/gen-mapping/-/gen-mapping-0.3.3.tgz"
@@ -1203,16 +1186,6 @@
   "integrity" "sha512-T7VNNlYVM1SgQ+VsMYhnDkcGmWhQdL0bDyGm5TlQ3GBXnJscEClUUOKduWTmm2zCnvNLC1hc3JpuXjs/nFOc5w=="
   "resolved" "https://registry.npmjs.org/@soda/get-current-script/-/get-current-script-1.0.2.tgz"
   "version" "1.0.2"
-
-"@stencil/core@^2.18.0":
-  "integrity" "sha512-kmVA0M/HojwsfkeHsifvHVIYe4l5tin7J5+DLgtl8h6WWfiMClND5K3ifCXXI2ETDNKiEk21p6jql3Fx9o2rng=="
-  "resolved" "https://registry.npmjs.org/@stencil/core/-/core-2.22.3.tgz"
-  "version" "2.22.3"
-
-"@stencil/core@^3.2.1":
-  "integrity" "sha512-Ybm4NteQBScLq3H0JML/uqo4nWjNpZw1HAAURtR5LlRm7ptzNKO5S8EnHp3m05/uyTzeh9yLpUFHY7bxGNdYLg=="
-  "resolved" "https://registry.npmjs.org/@stencil/core/-/core-3.2.1.tgz"
-  "version" "3.2.1"
 
 "@supabase/functions-js@^2.1.0":
   "integrity" "sha512-bIR1Puae6W+1/MzPfYBWOG/SCWGo4B5CB7c0ZZksvliNEAzhxNBJ0UFKYINcGdGtxG8ZC+1xr3utWpNZNwnoRw=="
@@ -4344,13 +4317,6 @@
     "has" "^1.0.3"
     "side-channel" "^1.0.4"
 
-"ionicons@^7.0.0", "ionicons@^7.1.0":
-  "integrity" "sha512-iE4GuEdEHARJpp0sWL7WJZCzNCf5VxpNRhAjW0fLnZPnNL5qZOJUcfup2Z2Ty7Jk8Q5hacrHfGEB1lCwOdXqGg=="
-  "resolved" "https://registry.npmjs.org/ionicons/-/ionicons-7.1.0.tgz"
-  "version" "7.1.0"
-  dependencies:
-    "@stencil/core" "^2.18.0"
-
 "ipaddr.js@^2.0.1":
   "integrity" "sha512-1qTgH9NG+IIJ4yfKs2e6Pp1bZg8wbDbKHT21HrLIeYBTRLgMYKnMTPAuI3Lcs61nfx5h1xlXnbJtH1kX5/d/ng=="
   "resolved" "https://registry.npmjs.org/ipaddr.js/-/ipaddr.js-2.0.1.tgz"
@@ -6829,7 +6795,7 @@
   "resolved" "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
   "version" "1.14.1"
 
-"tslib@^2.0.3", "tslib@^2.1.0":
+"tslib@^2.0.3":
   "integrity" "sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg=="
   "resolved" "https://registry.npmjs.org/tslib/-/tslib-2.5.0.tgz"
   "version" "2.5.0"
