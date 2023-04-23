@@ -1,6 +1,8 @@
 <template>
-  <v-container fluid class="wrapper">
+  <v-container fluid class="wrapper flex-column">
     <v-card>
+      <img src="../../public/logo/puppy-logo.svg" width="100" />
+      <!-- <v-img src="../../public/logo/puppy-logo.svg"></v-img> -->
       <v-card-title class="text-center">Sign in</v-card-title>
       <v-card-text>
         <form @submit.prevent="handleSignIn">
@@ -36,6 +38,19 @@
         </div>
       </v-card-text>
     </v-card>
+    <div class="d-flex flex-column mt-4">
+      <span>
+        This is a personal project that may or may not be maintained.
+      </span>
+      <span class="text-center mt-4">
+        <a
+          href="https://github.com/KajsaEklof/dog-separation-anxiety-app"
+          target="external"
+        >
+          View on Github <v-icon>mdi-github</v-icon></a
+        >
+      </span>
+    </div>
   </v-container>
 </template>
 
