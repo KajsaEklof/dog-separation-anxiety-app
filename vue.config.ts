@@ -4,6 +4,7 @@ module.exports = defineConfig({
   transpileDependencies: true,
   pwa: {
     name: 'Dog Log',
+    shortName: 'Dog Log',
     themeColor: '#4DBA87',
     msTileColor: '#000000',
     appleMobileWebAppCapable: 'yes',
