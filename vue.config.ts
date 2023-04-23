@@ -37,5 +37,9 @@ module.exports = defineConfig({
         }
       ],
     },
+    workboxOptions: {
+      skipWaiting: true,
+      clientsClaim: true,
+    }
   },
 });

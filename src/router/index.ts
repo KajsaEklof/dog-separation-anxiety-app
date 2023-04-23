@@ -63,17 +63,17 @@ const router = createRouter({
 router.beforeEach(async (to, from) => {
   const session = await supabase.auth.getSession();
 
-  // if (to.name !== 'Sign In' && to.name !== 'Sign Up') {
-  //   if (!session.data.session) {
-  //     // redirect the user to the login page
-  //     return { name: 'Sign In' };
-  //   }
-  // } else {
-  //   if (session.data.session) {
-  //     // redirect the user to the home page
-  //     return { name: 'Home' };
-  //   }
-  // }
+  if (to.name !== 'Sign In' && to.name !== 'Sign Up') {
+    if (!session.data.session) {
+      // redirect the user to the login page
+      return { name: 'Sign In' };
+    }
+  } else {
+    if (session.data.session) {
+      // redirect the user to the home page
+      return { name: 'Home' };
+    }
+  }
 });
 
 export default router;
