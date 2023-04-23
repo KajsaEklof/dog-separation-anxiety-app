@@ -1,0 +1,21 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2em;
+
+  .content {
+    width: 80%;
+  }
+
+  .v-card {
+    width: 100%;
+    max-width: 500px;
+  }
+}
+
+.router-view {
+  height: calc(100% - 64px);
+  overflow: auto;
+}
