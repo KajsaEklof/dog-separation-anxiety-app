@@ -2,7 +2,6 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import './registerServiceWorker';
 import router from './router';
-import { IonicVue } from '@ionic/vue';
 import { createPinia } from 'pinia';
 
 // Vuetify
@@ -122,7 +121,6 @@ const vuetify = createVuetify({
 
 createApp(App)
   .use(router)
-  .use(IonicVue)
   .use(createPinia())
   .use(vuetify)
   .mount('#app');

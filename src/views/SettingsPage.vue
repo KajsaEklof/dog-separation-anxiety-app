@@ -1,86 +1,23 @@
 <template>
-  <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Account</ion-title>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content>
-      <form @submit.prevent="updateProfile">
-        <ion-item>
-          <ion-label>
-            <p>Email</p>
-            <p>{{ session }}</p>
-          </ion-label>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="stacked">Name</ion-label>
-          <ion-input
-            type="text"
-            name="username"
-            v-model="profile.username"
-          ></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label position="stacked">Website</ion-label>
-          <ion-input
-            type="url"
-            name="website"
-            v-model="profile.website"
-          ></ion-input>
-        </ion-item>
-        <div class="ion-text-center">
-          <ion-button fill="clear" type="submit">Update Profile</ion-button>
-        </div>
-      </form>
-
-      <div class="ion-text-center">
-        <ion-button fill="clear" @click="signOut">Log Out</ion-button>
-      </div>
-    </ion-content>
-  </ion-page>
+  <div class="text-center">
+    <h1>settings</h1>
+    <v-btn color="primary" @click="signOut">Log Out</v-btn>
+  </div>
 </template>
 
 <script lang="ts">
 // import { store } from "@/store";
-import { supabase } from '@/supabase';
-import {
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-  toastController,
-  loadingController,
-  IonInput,
-  IonItem,
-  IonButton,
-  IonLabel,
-} from '@ionic/vue';
-import { User } from '@supabase/supabase-js';
-import { defineComponent, onMounted, ref } from 'vue';
+import { supabase } from "@/supabase";
+import { User } from "@supabase/supabase-js";
+import { defineComponent, onMounted, ref } from "vue";
 export default defineComponent({
-  name: 'SettingsPage',
-  components: {
-    IonContent,
-    IonHeader,
-    IonPage,
-    IonTitle,
-    IonToolbar,
-    IonInput,
-    IonItem,
-    IonButton,
-    IonLabel,
-  },
+  name: "SettingsPage",
   setup() {
     const session = ref(supabase.auth.getSession());
     const profile = ref({
-      username: '',
-      website: '',
-      avatar_url: '',
+      username: "",
+      website: "",
+      avatar_url: "",
     });
     // const user = store.user as User;
     async function getProfile() {
@@ -135,17 +72,11 @@ export default defineComponent({
     };
 
     async function signOut() {
-      const loader = await loadingController.create({});
-      const toast = await toastController.create({ duration: 5000 });
-      await loader.present();
       try {
         const { error } = await supabase.auth.signOut();
         if (error) throw error;
       } catch (error: any) {
-        toast.message = error.message;
-        await toast.present();
-      } finally {
-        await loader.dismiss();
+        console.error(error);
       }
     }
 
