@@ -11,6 +11,42 @@ export interface IStartTrainingSessionOptions {
 // const petStore = usePetStore();
 
 export default function useTrainingSession() {
+  const getSessionInProgress = async () => {
+    if (!supabase) {
+      return;
+    }
+
+    const { getPet } = usePetIdentity();
+    const pet = await getPet();
+    if (!pet || !pet.data) {
+      throw new Error('No dog added yet');
+    }
+
+    const getUser = await supabase.auth.getUser();
+    const user = getUser.data.user;
+    if (!user) {
+      throw new Error('No logged in user');
+    }
+
+    const { data, error } = await supabase.from('training_session')
+      .select('*')
+      .eq('user_id', user.id)
+      .eq('pet_id', pet.data[0].id)
+      .eq("good", false)
+      .eq("bad", false)
+      .eq("ok", false)
+
+    if (data?.length) {
+      return {
+        warmups: data[0].warmups as number,
+        targetTime: data[0].target_duration as string,
+        sessionId: data[0].id as string,
+      };
+    }
+
+    return;
+  }
+
   const getBaseTrainingSessionDetails = async () => {
     if (!supabase) {
       return;
@@ -120,5 +156,6 @@ export default function useTrainingSession() {
     getBaseTrainingSessionDetails,
     newTrainingSession,
     updateTrainingSession,
+    getSessionInProgress,
   };
 }

@@ -74,6 +74,8 @@ const randomWarmups = computed(() => {
 });
 
 onMounted(() => {
+  // * Check route to see if we need to fetch the current session
+  console.log(router.currentRoute.value);
   completedWarmups = completedWarmupsValues();
 });
 

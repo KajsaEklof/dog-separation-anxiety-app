@@ -57,33 +57,41 @@ const warmups = ref(5);
 const minutes = ref(0);
 const seconds = ref(30);
 const { getPet } = usePetIdentity();
-const { getBaseTrainingSessionDetails, newTrainingSession } =
-  useTrainingSession();
+const {
+  getBaseTrainingSessionDetails,
+  newTrainingSession,
+  getSessionInProgress,
+} = useTrainingSession();
 
 const petStore = usePetStore();
 const { setTrainingSession } = petStore;
 const router = useRouter();
 
 onMounted(async () => {
-  console.log("mounted training page", petStore);
   const pet = await getPet();
 
   if (pet && pet.data) {
     dogName.value = pet.data[0].name;
   }
 
-  const session = await getBaseTrainingSessionDetails();
+  const inProgressTrainingSession = await getSessionInProgress();
 
-  targetTime.value = session;
+  if (inProgressTrainingSession) {
+    targetTime.value = inProgressTrainingSession.targetTime;
+  } else {
+    const session = await getBaseTrainingSessionDetails();
+    targetTime.value = session;
+  }
 });
 
 async function handleStartTraining(ev: Event): Promise<void> {
   ev.stopPropagation();
   ev.preventDefault();
 
+  const trainingTargetTime = `00${minutes.value}:${seconds.value}`;
   const call = await newTrainingSession({
     warmups: warmups.value,
-    targetTime: targetTime.value,
+    targetTime: trainingTargetTime,
   });
 
   if (call && call.sessionId && !call.error) {

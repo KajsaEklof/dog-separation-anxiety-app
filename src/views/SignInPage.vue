@@ -28,6 +28,9 @@
             variant="outlined"
             density="comfortable"
           />
+          <div v-if="hasErrors" class="error-messages">
+            <p class="text-error">{{ errorMessage }}</p>
+          </div>
           <v-btn block color="primary" type="submit" class="mt-4"
             >Sign In</v-btn
           >
@@ -54,48 +57,40 @@
   </v-container>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { supabase } from "@/supabase";
-import { defineComponent, ref } from "vue";
+import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import useAuthUser from "@/composables/AuthUser";
 
-export default defineComponent({
-  name: "SignInPage",
-  components: {},
-  setup() {
-    const email = ref("");
-    const password = ref("");
-    const router = useRouter();
-    const { rules } = useAuthUser();
+const email = ref("");
+const password = ref("");
+const router = useRouter();
+const { rules } = useAuthUser();
+const errorMessage = ref("");
 
-    const handleSignIn = async () => {
-      // const loader = await loadingController.create({});
-      // const toast = await toastController.create({ duration: 5000 });
-      console.log("handleSignIn");
-      try {
-        // await loader.present();
-        const authResponse = await supabase.auth.signInWithPassword({
-          email: email.value,
-          password: password.value,
-        });
-
-        console.log(authResponse);
-
-        if (authResponse.error) {
-          throw authResponse.error;
-        }
-
-        router.push("/");
-      } catch (error: any) {
-        // toast.message = error.error_description || error.message;
-        // await toast.present();
-      } finally {
-        // await loader.dismiss();
-      }
-    };
-
-    return { handleSignIn, email, password, rules };
-  },
+const hasErrors = computed(() => {
+  return errorMessage.value !== "";
 });
+
+const handleSignIn = async () => {
+  try {
+    const authResponse = await supabase.auth.signInWithPassword({
+      email: email.value,
+      password: password.value,
+    });
+
+    console.log(authResponse);
+
+    if (authResponse.error) {
+      errorMessage.value = authResponse.error.message;
+      throw authResponse.error;
+    }
+
+    router.push("/");
+  } catch (error: any) {
+    // toast.message = error.error_description || error.message;
+    // await toast.present();
+  }
+};
 </script>

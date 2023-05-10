@@ -24,6 +24,9 @@
             variant="outlined"
             density="comfortable"
           />
+          <div v-if="hasErrors" class="error-messages">
+            <p class="text-error">{{ errorMessage }}</p>
+          </div>
           <v-btn block color="primary" type="submit" class="mt-4"
             >Sign Up</v-btn
           >
@@ -50,39 +53,32 @@
   </v-container>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { supabase } from "@/supabase";
-import { defineComponent, ref } from "vue";
+import { computed, ref } from "vue";
 
-export default defineComponent({
-  name: "SignUpPage",
-  setup() {
-    const email = ref("");
-    const password = ref("");
-    const handleSignUp = async () => {
-      // const loader = await loadingController.create({});
-      // const toast = await toastController.create({ duration: 5000 });
+const email = ref("");
+const password = ref("");
+const errorMessage = ref("");
 
-      try {
-        // await loader.present();
-        const authResponse = await supabase.auth.signInWithPassword({
-          email: email.value,
-          password: password.value,
-        });
-
-        console.log(authResponse);
-
-        if (authResponse.error) throw authResponse.error;
-        // toast.message = "Check your email for the login link!";
-        // await toast.present();
-      } catch (error: any) {
-        // toast.message = error.error_description || error.message;
-        // await toast.present();
-      } finally {
-        // await loader.dismiss();
-      }
-    };
-    return { handleSignUp, email, password };
-  },
+const hasErrors = computed(() => {
+  return errorMessage.value !== "";
 });
+
+const handleSignUp = async () => {
+  try {
+    const authResponse = await supabase.auth.signInWithPassword({
+      email: email.value,
+      password: password.value,
+    });
+
+    console.log(authResponse);
+
+    if (authResponse.error) {
+      throw authResponse.error;
+    }
+  } catch (error: any) {
+    // console.error(error)
+  }
+};
 </script>
