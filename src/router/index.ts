@@ -24,7 +24,7 @@ const routes: Array<RouteRecordRaw> = [
         component: TrainingPage,
       },
       {
-        path: '/active-training-session/:id',
+        path: '/active-training-session/:id?',
         component: ActiveTrainingPage,
       },
       {
