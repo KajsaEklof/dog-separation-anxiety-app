@@ -78,9 +78,16 @@ onMounted(async () => {
 
   if (inProgressTrainingSession) {
     targetTime.value = inProgressTrainingSession.targetTime;
+
+    const times = inProgressTrainingSession.targetTime.split(":");
+    seconds.value = parseInt(times[2]);
+    minutes.value = parseInt(times[1]);
   } else {
     const session = await getBaseTrainingSessionDetails();
     targetTime.value = session;
+    const times = session.split(":");
+    seconds.value = times[2];
+    minutes.value = times[1];
   }
 });
 
@@ -88,18 +95,23 @@ async function handleStartTraining(ev: Event): Promise<void> {
   ev.stopPropagation();
   ev.preventDefault();
 
-  const trainingTargetTime = `00${minutes.value}:${seconds.value}`;
+  const mins = minutes.value >= 10 ? minutes.value : `0${minutes.value}`;
+  const secs = seconds.value >= 10 ? seconds.value : `0${seconds.value}`;
+
+  const trainingTargetTime = `${mins}:${secs}`;
   const call = await newTrainingSession({
     warmups: warmups.value,
     targetTime: trainingTargetTime,
   });
+
+  console.log("trainingTargetTime", trainingTargetTime);
 
   if (call && call.sessionId && !call.error) {
     console.log(call);
     setTrainingSession({
       id: call.sessionId,
       warmups: warmups.value,
-      targetDuration: targetTime.value,
+      targetDuration: trainingTargetTime,
     });
 
     const paramId = call.sessionId.split("-")[0];
