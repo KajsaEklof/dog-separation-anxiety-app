@@ -1,7 +1,6 @@
 <template>
   <v-container class="wrapper flex-column">
     <h1 class="mb-4">{{ dogName }} Training</h1>
-
     <v-card>
       <v-card-title class="text-center">Let's go!</v-card-title>
       <v-card-text>

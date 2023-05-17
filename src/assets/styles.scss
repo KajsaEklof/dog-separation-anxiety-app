@@ -38,3 +38,13 @@ h5 {
   height: calc(100% - 64px);
   overflow: auto;
 }
+
+.profile-card-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .name {
+    margin-left: calc(50% - 36px);
+  }
+}

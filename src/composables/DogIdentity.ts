@@ -39,9 +39,46 @@ export default function usePetIdentity() {
     return call;
   };
 
+  const updateDogDetails = async (details: {
+    breed: null | string,
+    weight: null | string,
+    sex: null | string,
+    dob: null | string,
+  }, petId: string) => {
+    const data: {
+      breed?: string,
+      weight?: string,
+      sex?: string,
+      dob?: string,
+    } = {}
+
+    if (details.breed) {
+      data.breed = details.breed
+    }
+    if (details.weight) {
+      data.weight = details.weight
+    }
+    if (details.sex) {
+      data.sex = details.sex
+    }
+    if (details.dob) {
+      data.dob = details.dob
+    }
+
+    const call = await supabase
+      .from('pet_identity')
+      .update(data)
+      .eq('id', petId);
+
+    if (call.error) {
+      throw new Error(`Not able to update dog details, ${call.error}`)
+    }
+  }
+
   return {
     addPet,
     getPet,
     updatePetTargetTime,
+    updateDogDetails
   };
 }
