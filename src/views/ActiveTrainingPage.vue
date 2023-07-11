@@ -111,6 +111,7 @@ async function handleCompleteSession(): Promise<void> {
 
   // Update the pooches target duration depending on session result
   const currentTD = trainingSession.targetDuration;
+  console.log("currentTD", currentTD);
   let newTD = "";
   const target: DateTime = DateTime.fromSQL(currentTD);
   let targetSeconds = target.toSeconds();

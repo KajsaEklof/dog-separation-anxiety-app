@@ -48,3 +48,11 @@ h5 {
     margin-left: calc(50% - 36px);
   }
 }
+
+.weekly-target {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2em;
+}

@@ -28,13 +28,18 @@ export default function useTrainingSession() {
       throw new Error('No logged in user');
     }
 
-    const { data, error } = await supabase.from('training_session')
-      .select('*')
+    // const { data, error } = await supabase.from('training_session')
+    //   .select('*')
+    //   .eq('user_id', user.id)
+    //   .eq('pet_id', pet.data[0].id)
+    //   .eq("completed_at", null)
+
+    const { data, error } = await supabase
+      .from('training_session')
+      .select()
       .eq('user_id', user.id)
       .eq('pet_id', pet.data[0].id)
-      .eq("good", false)
-      .eq("bad", false)
-      .eq("ok", false)
+      .is('completed_at', null)
 
     if (data?.length) {
       return {
@@ -152,10 +157,48 @@ export default function useTrainingSession() {
     return call;
   };
 
+  const getWeeklyTrainingSessions = async () => {
+    const today = new Date();
+    const firstDay = new Date(
+      today.setDate(today.getDate() - today.getDay() + 1)
+    );
+    const lastDay = new Date(today.setDate(today.getDate() - today.getDay() + 7));
+    const startDate = `${firstDay.getFullYear()}-${(firstDay.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${firstDay.getDate().toString().padStart(2, "0")}`;
+    const endDate = `${lastDay.getFullYear()}-${(lastDay.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${lastDay.getDate().toString().padStart(2, "0")}`;
+
+    const { getPet } = usePetIdentity();
+    const pet = await getPet();
+
+    if (!pet || !pet.data || !pet.data[0]) {
+      throw new Error('No dog added yet');
+    }
+
+    const petId = pet.data[0].id;
+
+    const call = await supabase
+      .from('training_session')
+      .select('*')
+      .eq('pet_id', petId)
+      .gte('completed_at', startDate)
+      .lte('completed_at', endDate)
+
+    console.log("call", call)
+    if (call.data && 0 < call.data.length) {
+      return call.data
+    }
+
+    return undefined
+  }
+
   return {
     getBaseTrainingSessionDetails,
     newTrainingSession,
     updateTrainingSession,
     getSessionInProgress,
+    getWeeklyTrainingSessions,
   };
 }

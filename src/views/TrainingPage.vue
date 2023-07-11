@@ -76,6 +76,7 @@ onMounted(async () => {
   const inProgressTrainingSession = await getSessionInProgress();
 
   if (inProgressTrainingSession) {
+    console.log("inProgressTrainingSession", inProgressTrainingSession);
     targetTime.value = inProgressTrainingSession.targetTime;
 
     const times = inProgressTrainingSession.targetTime.split(":");
@@ -83,6 +84,7 @@ onMounted(async () => {
     minutes.value = parseInt(times[1]);
   } else {
     const session = await getBaseTrainingSessionDetails();
+    console.log("session", session);
     targetTime.value = session;
     const times = session.split(":");
     seconds.value = times[2];
