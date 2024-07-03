@@ -1,8 +1,7 @@
 <template>
   <v-container fluid class="wrapper flex-column">
-    <v-card>
-      <img src="../../public/logo/puppy-logo.svg" width="100" />
-      <!-- <v-img src="../../public/logo/puppy-logo.svg"></v-img> -->
+    <v-card class="d-flex flex-column">
+      <img src="../../public/logo/puppy-logo.svg" width="100" class="logo" />
       <v-card-title class="text-center">Sign in</v-card-title>
       <v-card-text>
         <form @submit.prevent="handleSignIn">
@@ -94,3 +93,9 @@ const handleSignIn = async () => {
   }
 };
 </script>
+
+<style lang="scss">
+.logo {
+  margin: 1em auto 0 auto; 
+}
+</style>

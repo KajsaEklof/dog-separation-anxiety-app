@@ -16,8 +16,8 @@ import '@/assets/styles.scss'
 const lightTheme: ThemeDefinition = {
   dark: false,
   colors: {
-    background: "#fbfdf8",
-    primary: "#006d3e",
+    background: "#fff",
+    primary: "#275d57", //"#006d3e",
     "on-primary": "#ffffff",
     "primary-container": "#8df8b5",
     "on-primary-container": "#00210f",

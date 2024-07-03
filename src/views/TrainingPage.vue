@@ -1,6 +1,11 @@
 <template>
-  <v-container class="wrapper flex-column">
-    <h1 class="mb-4">{{ dogName }} Training</h1>
+  <div class="training-wrapper flex-column">
+    <h1 class="mb-4">{{ dogName }}'s Training</h1>
+      <h2 class="text-center">
+      Current target duration for {{ dogName }}: {{ targetTime }}
+      </h2>
+        <h3 class="mt-4 mb-2" >Times you've trained this week</h3>
+        <v-avatar color="primary-container" class="mb-8" >{{ weeklyTraining }}</v-avatar>
     <v-card>
       <v-card-title class="text-center">Let's go!</v-card-title>
       <v-card-text>
@@ -38,7 +43,7 @@
         </form>
       </v-card-text>
     </v-card>
-  </v-container>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -61,6 +66,8 @@ const {
   newTrainingSession,
   getSessionInProgress,
 } = useTrainingSession();
+const { getWeeklyTrainingSessions } = useTrainingSession();
+const weeklyTraining = ref(0);
 
 const petStore = usePetStore();
 const { setTrainingSession } = petStore;
@@ -71,6 +78,11 @@ onMounted(async () => {
 
   if (pet && pet.data) {
     dogName.value = pet.data[0].name;
+  }
+
+  const sessions = await getWeeklyTrainingSessions();
+  if (sessions) {
+    weeklyTraining.value = sessions.length;
   }
 
   const inProgressTrainingSession = await getSessionInProgress();
@@ -121,3 +133,21 @@ async function handleStartTraining(ev: Event): Promise<void> {
   }
 }
 </script>
+
+<style lang="scss">
+.training-wrapper {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 2em;
+
+  .content {
+    width: 80%;
+  }
+
+  .v-card {
+    width: 100%;
+    max-width: 500px;
+  }
+}
+</style>
