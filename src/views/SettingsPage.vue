@@ -10,6 +10,9 @@
 import { supabase } from "@/supabase";
 import { User } from "@supabase/supabase-js";
 import { defineComponent, onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+
+
 export default defineComponent({
   name: "SettingsPage",
   setup() {
@@ -19,6 +22,9 @@ export default defineComponent({
       website: "",
       avatar_url: "",
     });
+
+    const router = useRouter();
+
     // const user = store.user as User;
     async function getProfile() {
       // const loader = await loadingController.create({});
@@ -74,7 +80,11 @@ export default defineComponent({
     async function signOut() {
       try {
         const { error } = await supabase.auth.signOut();
-        if (error) throw error;
+        if (error) {
+          throw error;
+        } else {
+          router.push("/sign-in");
+        }
       } catch (error: any) {
         console.error(error);
       }

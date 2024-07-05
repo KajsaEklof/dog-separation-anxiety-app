@@ -15,6 +15,9 @@
           ><v-icon>mdi-chart-timeline-variant-shimmer</v-icon></v-btn
         >
       </router-link>
+      <router-link to="/settings">
+        <v-btn color="primary" icon><v-icon>mdi-cog</v-icon></v-btn>
+      </router-link>
     </v-app-bar>
   </div>
 </template>
