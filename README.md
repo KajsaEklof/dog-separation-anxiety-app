@@ -2,6 +2,8 @@
 
 ## Project setup
 
+Add your Supabase environment variables to a new '.env' file, see '.env.example'
+
 ```
 npm install
 ```
