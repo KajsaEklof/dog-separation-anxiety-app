@@ -1,5 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { supabase } from '@/supabase';
+import userUserAccount from "@/composables/UserAccount";
 
 export interface IAddPetIdentityOptions {
   name: string;
@@ -25,7 +26,18 @@ export default function usePetIdentity() {
   };
 
   const getPet = async () => {
-    const pet = await supabase.from('pet_identity').select('*');
+    // const pet = await supabase.from('pet_identity').select('*');
+    const userId = userUserAccount().userId.value;
+
+    if (!userId) {
+      return;
+    }
+
+    const pet = await supabase.from('pets').select('*').contains('user_ids', [userId]);
+
+    if (pet.data?.length === 0) {
+      return
+    }
 
     return pet;
   };

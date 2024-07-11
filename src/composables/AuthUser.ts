@@ -84,6 +84,12 @@ export default function useAuthUser() {
     return { data, error };
   };
 
+  /* Get user account details from Supabase table */
+  const getUserAccount = async () => {
+    const user = await supabase.auth.getUser()
+    return user;
+  };
+
   return {
     user,
     login,
@@ -95,5 +101,6 @@ export default function useAuthUser() {
     sendPasswordRestEmail,
     // maybeHandleEmailConfirmation,
     rules,
+    getUserAccount,
   };
 }

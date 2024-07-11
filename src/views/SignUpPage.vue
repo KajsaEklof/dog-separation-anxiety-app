@@ -56,18 +56,19 @@
 <script lang="ts" setup>
 import { supabase } from "@/supabase";
 import { computed, ref } from "vue";
+import { useRouter } from "vue-router";
 
 const email = ref("");
 const password = ref("");
 const errorMessage = ref("");
-
+const router = useRouter();
 const hasErrors = computed(() => {
   return errorMessage.value !== "";
 });
 
 const handleSignUp = async () => {
   try {
-    const authResponse = await supabase.auth.signInWithPassword({
+    const authResponse = await supabase.auth.signUp({
       email: email.value,
       password: password.value,
     });
@@ -75,8 +76,11 @@ const handleSignUp = async () => {
     console.log(authResponse);
 
     if (authResponse.error) {
+      errorMessage.value = authResponse.error.message;
       throw authResponse.error;
     }
+
+    router.push("/");
   } catch (error: any) {
     // console.error(error)
   }

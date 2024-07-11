@@ -10,16 +10,19 @@
 import { ref, onMounted, computed } from "vue";
 import { usePetStore } from "@/stores/DogStore";
 import usePetIdentity from "@/composables/DogIdentity";
+import userUserAccount from "@/composables/UserAccount";
 
 const dogName = ref("");
 const petStore = usePetStore();
 const { setPet } = petStore;
 const { getPet } = usePetIdentity();
+const { checkUser } = userUserAccount();
 
 onMounted(async () => {
+  await checkUser();
   await getDog();
-
 });
+
 
 async function getDog(): Promise<void> {
   const pet = await getPet();
