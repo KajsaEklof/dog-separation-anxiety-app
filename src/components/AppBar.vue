@@ -1,3 +1,4 @@
+<!-- AppBar.vue -->
 <template>
   <div>
     <v-app-bar flat dark location="bottom" class="app-navigation">

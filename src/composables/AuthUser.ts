@@ -84,10 +84,10 @@ export default function useAuthUser() {
     return { data, error };
   };
 
-  /* Get user account details from Supabase table */
+  /* Get logged in user from Supabase auth */
   const getUserAccount = async () => {
-    const user = await supabase.auth.getUser()
-    return user;
+    const call = await supabase.auth.getUser()
+    return call.data.user;
   };
 
   return {

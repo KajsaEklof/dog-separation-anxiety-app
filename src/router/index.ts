@@ -61,7 +61,6 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from) => {
-  console.log('beforeEach', to, from)
   const session = await supabase.auth.getSession();
 
   if (to.name !== 'Sign In' && to.name !== 'Sign Up') {

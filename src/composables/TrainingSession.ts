@@ -1,7 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { supabase } from '@/supabase';
 import usePetIdentity from '@/composables/DogIdentity';
-import { usePetStore } from '@/stores/DogStore';
 
 export interface IStartTrainingSessionOptions {
   warmups: number;

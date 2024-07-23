@@ -121,6 +121,6 @@ const vuetify = createVuetify({
 
 createApp(App)
   .use(router)
-  .use(createPinia())
   .use(vuetify)
+  .use(createPinia())
   .mount('#app');

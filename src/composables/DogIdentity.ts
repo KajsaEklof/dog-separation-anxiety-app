@@ -1,6 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { supabase } from '@/supabase';
-import userUserAccount from "@/composables/UserAccount";
+import useAuthUser from "@/composables/AuthUser";
+
 
 export interface IAddPetIdentityOptions {
   name: string;
@@ -26,8 +27,9 @@ export default function usePetIdentity() {
   };
 
   const getPet = async () => {
-    // const pet = await supabase.from('pet_identity').select('*');
-    const userId = userUserAccount().userId.value;
+    const { getUserAccount } = useAuthUser();
+    const user = await getUserAccount()
+    const userId = user?.id;
 
     if (!userId) {
       return;
@@ -35,11 +37,11 @@ export default function usePetIdentity() {
 
     const pet = await supabase.from('pets').select('*').contains('user_ids', [userId]);
 
-    if (pet.data?.length === 0) {
+    if (pet.data?.length === 0 || !pet.data) {
       return
     }
 
-    return pet;
+    return pet.data[0];
   };
 
   const updatePetTargetTime = async (targetDuration: string, petId: string) => {

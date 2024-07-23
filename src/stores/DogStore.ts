@@ -13,26 +13,31 @@ export interface ITrainingSession {
   targetDuration: string;
 }
 
-export const usePetStore = defineStore('pet', () => {
+export const useDogStore = defineStore('dog', () => {
+  // * Store State
   const pet = ref({
     id: '',
     name: '',
     targetDuration: '',
   });
-
   const trainingSession = ref({
     id: '',
     warmups: 6,
     targetDuration: '',
   });
+  const showDogDetailsDialog = ref(false);
 
+
+  // * Store Actions
   function setPet(currentPet: IPet) {
     pet.value = currentPet;
   }
-
   function setTrainingSession(session: ITrainingSession) {
     trainingSession.value = session;
   }
+  function setShowDogDetailsDialog(show: boolean) {
+    showDogDetailsDialog.value = show;
+  }
 
-  return { pet, trainingSession, setPet, setTrainingSession };
+  return { pet, trainingSession, showDogDetailsDialog, setPet, setTrainingSession, setShowDogDetailsDialog };
 });
