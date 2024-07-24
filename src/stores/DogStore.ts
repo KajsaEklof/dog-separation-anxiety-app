@@ -4,6 +4,10 @@ import { ref } from 'vue';
 export interface IPet {
   id: string;
   name: string;
+  weight: string;
+  breed: string;
+  age: string;
+  sex: string;
   targetDuration: string;
 }
 
@@ -19,6 +23,10 @@ export const useDogStore = defineStore('dog', () => {
     id: '',
     name: '',
     targetDuration: '',
+    weight: '',
+    breed: '',
+    age: '',
+    sex: '',
   });
   const trainingSession = ref({
     id: '',
