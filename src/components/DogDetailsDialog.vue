@@ -72,7 +72,7 @@
 import { storeToRefs } from 'pinia'
 import { useDogStore } from "@/stores/DogStore";
 import { ref } from 'vue';
-import { v4 as uuidv4, validate } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { supabase } from '@/supabase';
 import useFormValidation from '@/composables/FormValidation';
 

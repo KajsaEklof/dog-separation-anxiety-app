@@ -1,16 +1,28 @@
 <template>
   <v-container>
-    <div v-if="hasPet">
-      <h1 class="text-center">
-        Welcome {{ dogName }}
+    <h1 class="text-center">
+        Welcome
       </h1>
-      <v-btn append-icon="mdi-plus" class="mt-4" @click="openDogDetailsDialog">Edit dog</v-btn>
-    </div>
-    <v-row v-else>
+    <v-card max-width="500" class="mx-auto mt-4">
+      <v-card-title v-if="hasPet">
+        <v-avatar variant="outlined">
+          <v-icon icon="mdi-dog"></v-icon>
+         </v-avatar>
+        {{ dogName }}
+      </v-card-title>
+      <v-card-text>
+        <v-list>
+          <v-list-item v-for="(value, key) in dog" :key="key">
+            <v-list-item-title>{{ key.toLocaleUpperCase() }} </v-list-item-title>
+            <v-list-item-subtitle>{{ value }}</v-list-item-subtitle>
+          </v-list-item>
+        </v-list>
+      </v-card-text>
+    </v-card>
+    <v-row>
       <v-col class="d-flex flex-column justify-center align-center">
-          <h1>Welcome</h1>
-          <h2>Add your pooch to get started!</h2>
-          <v-btn append-icon="mdi-plus" class="mt-4" @click="openDogDetailsDialog">Add dog</v-btn>
+        <h2 v-if="!hasPet">Add your pooch to get started!</h2>
+        <v-btn append-icon="mdi-plus" class="mt-4" @click="openDogDetailsDialog">Add dog</v-btn>
         </v-col>
     </v-row>
     <dog-details-dialog :show-dialog="true" />
@@ -28,6 +40,13 @@ const dogStore = useDogStore();
 const { setPet } = dogStore;
 const { getPet } = usePetIdentity();
 const hasPet = ref(false);
+const dog = ref({
+  name: "",
+  breed: "",
+  sex: "",
+  weight: 0,
+  birthday: "",
+});
 
 onMounted(async () => {
   await getDog();
@@ -44,8 +63,16 @@ async function getDog(): Promise<void> {
       targetDuration: pet.target_duration,
       breed: pet.breed,
       sex: pet.gender,
-      weight: '0',
-      age: '0',
+      weight: pet.weight,
+      age: pet.dob,
+    };
+
+    dog.value = {
+      name: data.name,
+      breed: data.breed,
+      weight: data.weight,
+      birthday: data.age,
+      sex: data.sex,
     };
 
     setPet(data);
@@ -53,6 +80,10 @@ async function getDog(): Promise<void> {
 
     hasPet.value = true;
   }
+
+  setTimeout(() => {
+    // isLoadingPet.value = false;
+  }, 1000);
 }
 
 function openDogDetailsDialog(): void {
