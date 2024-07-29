@@ -5,17 +5,17 @@
       <router-link to="/">
         <v-btn color="primary" icon><v-icon>mdi-home</v-icon></v-btn>
       </router-link>
-      <router-link to="/dog-profile">
+      <router-link to="/dog-notes">
         <v-btn color="primary" icon><v-icon>mdi-dog</v-icon></v-btn>
       </router-link>
-      <router-link to="/train">
-        <v-btn color="primary" icon><v-icon>mdi-weight-lifter</v-icon></v-btn>
-      </router-link>
-      <router-link to="/stats">
+      <router-link to="/dog-health">
         <v-btn color="primary" icon
-          ><v-icon>mdi-chart-timeline-variant-shimmer</v-icon></v-btn
+        ><v-icon>mdi-stethoscope</v-icon></v-btn
         >
-      </router-link>
+        </router-link>
+        <router-link to="/train">
+          <v-btn color="primary" icon><v-icon>mdi-weight-lifter</v-icon></v-btn>
+        </router-link>
       <router-link to="/settings">
         <v-btn color="primary" icon><v-icon>mdi-cog</v-icon></v-btn>
       </router-link>

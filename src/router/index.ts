@@ -3,12 +3,14 @@ import HomePage from '@/views/HomePage.vue';
 import LayoutView from '@/views/LayoutView.vue';
 import TrainingPage from '@/views/TrainingPage.vue';
 import ActiveTrainingPage from '@/views/ActiveTrainingPage.vue';
-import StatsPage from '@/views/StatsPage.vue';
+// import StatsPage from '@/views/StatsPage.vue';
 import SettingsPage from '@/views/SettingsPage.vue';
-import DogProfilePage from '@/views/DogProfilePage.vue';
+// import DogProfilePage from '@/views/DogProfilePage.vue';
 import SignInPage from '@/views/SignInPage.vue';
 import SignUpPage from '@/views/SignUpPage.vue';
 import { supabase } from '@/supabase';
+import DogNotes from '@/views/DogNotes.vue';
+import DogHealth from '@/views/DogHealth.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -28,8 +30,8 @@ const routes: Array<RouteRecordRaw> = [
         component: ActiveTrainingPage,
       },
       {
-        path: '/stats',
-        component: StatsPage,
+        path: '/dog-health',
+        component: DogHealth,
       },
       {
         path: '/settings',
@@ -37,9 +39,9 @@ const routes: Array<RouteRecordRaw> = [
         component: SettingsPage,
       },
       {
-        path: '/dog-profile',
-        name: 'Dog Profile',
-        component: DogProfilePage,
+        path: '/dog-notes',
+        name: 'Dog Notes',
+        component: DogNotes,
       },
     ],
   },
