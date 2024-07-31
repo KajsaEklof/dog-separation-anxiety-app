@@ -1363,6 +1363,11 @@
   resolved "https://registry.npmjs.org/@types/mime/-/mime-3.0.1.tgz"
   integrity sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA==
 
+"@types/minimasonry@^1.3.5":
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/@types/minimasonry/-/minimasonry-1.3.5.tgz#0513d7306172134c6ae2a26c8deac2834aebeecb"
+  integrity sha512-k06l7VDZHs8C+eLgK+FIvmKMvMI/CK4tOhLrUAGyB/Ms/QEciei7AwU5PhrsFkR4O+5yDl49P0i62gnVmIr9Hw==
+
 "@types/minimist@^1.2.0":
   version "1.2.2"
   resolved "https://registry.npmjs.org/@types/minimist/-/minimist-1.2.2.tgz"
@@ -4892,6 +4897,11 @@ minimalistic-assert@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npmjs.org/minimalistic-assert/-/minimalistic-assert-1.0.1.tgz"
   integrity sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A==
+
+minimasonry@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/minimasonry/-/minimasonry-1.3.2.tgz#16961ae9a271b1e99d6834dcb692347312a78100"
+  integrity sha512-ygvf5JIR4NT1LbM6o8z1oz1icTkta72gXKwidvSqIVxuzVd/P21UI0Wbq1J+MStAu50Vvr8qWYNSz1W4uycqMQ==
 
 minimatch@^3.0.4, minimatch@^3.1.1:
   version "3.1.2"
