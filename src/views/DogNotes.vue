@@ -1,12 +1,22 @@
 <template>
   <v-container>
-    <h1>Notes</h1>
-    <div class="masonry-layout container container_1">
-      <div v-for="( item, index) in items" :key="index" class="item">
-        <div>{{ item.title }}</div>
-        <div>{{ item.content }}</div>
-      </div>
+    <h1>Notes
+      <v-fab
+        icon="mdi-plus"
+        location="bottom end"
+        color="primary"
+        offset
+        absolute
+        @click="addNote"
+      ></v-fab>
+    </h1>
+    <div class="masonry-layout container masonary_container">
+      <v-card v-for="( item, index) in items" :key="index" class="item" elevation="2" hover>
+        <v-card-title>{{ item.title }}</v-card-title>
+        <v-card-text>{{ item.content }}</v-card-text>
+      </v-card>
     </div>
+   
   </v-container>
 </template>
 
@@ -15,27 +25,30 @@ import MiniMasonry from 'minimasonry';
 import { onMounted } from 'vue';
 
 onMounted(() => {
-const masonry1 = new MiniMasonry({
-  container: '.container_1',
-  baseWidth: 150
-});
-
+  const masonry = new MiniMasonry({
+    container: '.masonary_container',
+    baseWidth: 150
+  });
 })
+
+function addNote() {
+  console.log('Add note');
+}
 
 
 const items = [{
   title: "Note 1",
-  content: "This is a note",
+  content: "This is a note note note, This is a note note note",
   date: "2021-10-10",
 },
 {
   title: "Note 2",
-  content: "This is another note",
+  content: "This is another note note, , This is a note note note, This is a note note note",
   date: "2021-10-11",
 },
 {
   title: "Note 3",
-  content: "This is yet another note",
+  content: "This is yet another note nooooot",
   date: "2021-10-12",
 },
 {
