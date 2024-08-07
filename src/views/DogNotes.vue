@@ -11,18 +11,25 @@
       ></v-fab>
     </h1>
     <div class="masonry-layout container masonary_container">
-      <v-card v-for="( item, index) in items" :key="index" class="item" elevation="2" hover>
+      <v-card v-for="( item, index) in items" :key="index" class="item" elevation="2" hover @click="openNoteEditor(item)">
         <v-card-title>{{ item.title }}</v-card-title>
         <v-card-text>{{ item.content }}</v-card-text>
       </v-card>
     </div>
-   
+   <note-editor-dialog :title="title"  :content="content" :id="noteId" />
   </v-container>
 </template>
 
 <script lang="ts" setup>
 import MiniMasonry from 'minimasonry';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
+import NoteEditorDialog from '@/components/NoteEditorDialog.vue';
+import { useUiStore } from "@/stores/UiStore";
+
+const uiStore = useUiStore();
+const title = ref('');
+const content = ref('');
+const noteId = ref('');
 
 onMounted(() => {
   const masonry = new MiniMasonry({
@@ -32,7 +39,22 @@ onMounted(() => {
 })
 
 function addNote() {
-  console.log('Add note');
+  title.value = '';
+  content.value = '';
+  noteId.value = '';
+  uiStore.setShowDogDetailsDialog(true);
+}
+
+function openNoteEditor(item: {
+    title: string;
+    content: string;
+    date: string;
+}) {
+  title.value = item.title;
+  content.value = item.content;
+  noteId.value = item.date;
+  
+  uiStore.setShowDogDetailsDialog(true);
 }
 
 
