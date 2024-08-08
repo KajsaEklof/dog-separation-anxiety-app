@@ -5,9 +5,9 @@ import { ref } from 'vue';
 export const useUiStore = defineStore('ui', () => {
   const showNoteEditorDialog = ref(false);
 
-  function setShowDogDetailsDialog(show: boolean) {
+  function setShowNotesEditorDialog(show: boolean) {
     showNoteEditorDialog.value = show;
   }
 
-  return { showNoteEditorDialog, setShowDogDetailsDialog};
+  return { showNoteEditorDialog, setShowNotesEditorDialog};
 });

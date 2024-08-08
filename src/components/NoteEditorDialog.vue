@@ -3,11 +3,11 @@
     <v-card>
       <v-card-title>{{ isEditing ? 'Edit' : 'Add'}} note</v-card-title>
       <v-card-text>
-        <v-text-field label="Title" v-model="editTitle"></v-text-field>
-        <v-textarea label="Content" v-model="editContent"></v-textarea>
+        <v-text-field v-model="editTitle"  placeholder="Title" variant="solo" class="plain-text-input title"></v-text-field>
+        <v-textarea v-model="editContent" placeholder="Thing that I must remember..." variant="solo" class="plain-text-input" ></v-textarea>
       </v-card-text>
       <v-card-actions>
-        <v-btn @click="addNote">Cancel</v-btn>
+        <v-btn @click="cancel">Cancel</v-btn>
         <v-btn @click="saveNote">Save</v-btn>
       </v-card-actions>
     </v-card>
@@ -37,8 +37,8 @@ watch(() => store.showNoteEditorDialog, (show) => {
   }
 })
 
-function addNote() {
-  console.log('Add note');
+function cancel() {
+  store.setShowNotesEditorDialog(false);
 }
 
 function saveNote() {

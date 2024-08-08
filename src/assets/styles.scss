@@ -93,3 +93,17 @@ h5 {
 // .item8 { grid-row: span 10; background-color: #6c5b7b; }
 // .item9 { grid-row: span 25; background-color: #00a86b; }
 // .item10 { grid-row: span 30; background-color: #b565a7;}
+
+
+.plain-text-input {
+  .v-field {
+    box-shadow: none;
+  }
+
+  &.title {
+    .v-field {
+      font-size: 1.8em;
+      font-weight: 800;
+    }
+  }
+}

@@ -1,15 +1,13 @@
 <template>
   <v-container>
-    <h1>Notes
-      <v-fab
-        icon="mdi-plus"
-        location="bottom end"
-        color="primary"
-        offset
-        absolute
-        @click="addNote"
-      ></v-fab>
-    </h1>
+    <v-row no-gutters>
+      <v-col class="py-b pl-2">
+        <h1>Notes</h1>
+      </v-col>
+      <v-col class="d-flex justify-end pb-4 pr-2">
+        <v-btn icon="mdi-plus" color="primary" @click="addNote"></v-btn>
+      </v-col>
+    </v-row>
     <div class="masonry-layout container masonary_container">
       <v-card v-for="( item, index) in items" :key="index" class="item" elevation="2" hover @click="openNoteEditor(item)">
         <v-card-title>{{ item.title }}</v-card-title>
@@ -42,7 +40,7 @@ function addNote() {
   title.value = '';
   content.value = '';
   noteId.value = '';
-  uiStore.setShowDogDetailsDialog(true);
+  uiStore.setShowNotesEditorDialog(true);
 }
 
 function openNoteEditor(item: {
@@ -53,8 +51,8 @@ function openNoteEditor(item: {
   title.value = item.title;
   content.value = item.content;
   noteId.value = item.date;
-  
-  uiStore.setShowDogDetailsDialog(true);
+
+  uiStore.setShowNotesEditorDialog(true);
 }
 
 
