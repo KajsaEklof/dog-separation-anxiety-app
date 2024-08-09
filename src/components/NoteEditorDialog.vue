@@ -17,6 +17,8 @@
 <script setup lang="ts">
 import { defineProps, ref, watch } from 'vue';
 import { useUiStore } from "@/stores/UiStore";
+import { useDogStore } from "@/stores/DogStore";
+import { supabase } from '@/supabase';
 
 const props = defineProps({
   title: { type: String, required: true },
@@ -25,6 +27,7 @@ const props = defineProps({
   })
 
 const store = useUiStore();
+const dogStore = useDogStore();
   
 const editTitle = ref(props.title);
 const editContent = ref(props.content);
@@ -41,7 +44,12 @@ function cancel() {
   store.setShowNotesEditorDialog(false);
 }
 
-function saveNote() {
-  console.log('Save note');
+async function saveNote() {
+  const call = await supabase.from('notes').upsert({
+    id: props.id,
+    title: editTitle.value,
+    content: editContent.value,
+    pet_id: dogStore.pet.id,
+  });
 }
 </script>

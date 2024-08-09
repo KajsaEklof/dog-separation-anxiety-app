@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { supabase } from '@/supabase';
 import useAuthUser from "@/composables/AuthUser";
-
+import { useDogStore } from "@/stores/DogStore";
 
 export interface IAddPetIdentityOptions {
   name: string;
@@ -30,18 +30,31 @@ export default function usePetIdentity() {
     const { getUserAccount } = useAuthUser();
     const user = await getUserAccount()
     const userId = user?.id;
+    const dogStore = useDogStore();
+    const { setPet } = dogStore;
 
     if (!userId) {
       return;
     }
 
-    const pet = await supabase.from('pets').select('*').contains('user_ids', [userId]);
+    const dog = await supabase.from('pets').select('*').contains('user_ids', [userId]);
 
-    if (pet.data?.length === 0 || !pet.data) {
+    if (dog.data?.length === 0 || !dog.data) {
       return
     }
 
-    return pet.data[0];
+    const data = {
+      id: dog.data[0].id,
+      name: dog.data[0].name,
+      targetDuration: dog.data[0].target_duration,
+      breed: dog.data[0].breed,
+      sex: dog.data[0].gender,
+      weight: dog.data[0].weight,
+      age: dog.data[0].dob,
+    };
+
+    setPet(data);
+    return dog.data[0];
   };
 
   const updatePetTargetTime = async (targetDuration: string, petId: string) => {

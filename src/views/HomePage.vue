@@ -22,7 +22,7 @@
     <v-row>
       <v-col class="d-flex flex-column justify-center align-center">
         <h2 v-if="!hasPet">Add your pooch to get started!</h2>
-        <v-btn append-icon="mdi-plus" class="mt-4" @click="openDogDetailsDialog">Add dog</v-btn>
+        <v-btn append-icon="mdi-plus" class="mt-4" color="primary" @click="openDogDetailsDialog">Add dog</v-btn>
         </v-col>
     </v-row>
     <dog-details-dialog :show-dialog="true" />
@@ -37,7 +37,6 @@ import DogDetailsDialog from "@/components/DogDetailsDialog.vue";
 
 const dogName = ref("");
 const dogStore = useDogStore();
-const { setPet } = dogStore;
 const { getPet } = usePetIdentity();
 const hasPet = ref(false);
 const dog = ref({
@@ -49,34 +48,36 @@ const dog = ref({
 });
 
 onMounted(async () => {
+  if (dogStore.pet.id) {
+    dog.value = {
+      name: dogStore.pet.name,
+      breed: dogStore.pet.breed,
+      weight: parseInt(dogStore.pet.weight) || 0,
+      birthday: dogStore.pet.age,
+      sex: dogStore.pet.sex,
+    };
+
+    dogName.value = dogStore.pet.name;
+    hasPet.value = true;
+    return
+  }
+
   await getDog();
 });
 
 
 async function getDog(): Promise<void> {
   const pet = await getPet();
-  console.log('getPet', pet);
   if (pet) {
-    const data = {
-      id: pet.id,
-      name: pet.name,
-      targetDuration: pet.target_duration,
-      breed: pet.breed,
-      sex: pet.gender,
-      weight: pet.weight,
-      age: pet.dob,
-    };
-
     dog.value = {
-      name: data.name,
-      breed: data.breed,
-      weight: data.weight,
-      birthday: data.age,
-      sex: data.sex,
+      name: pet.name,
+      breed: pet.breed,
+      weight: pet.weight,
+      birthday: pet.age,
+      sex: pet.sex,
     };
 
-    setPet(data);
-    dogName.value = data.name;
+    dogName.value = pet.name;
 
     hasPet.value = true;
   }
