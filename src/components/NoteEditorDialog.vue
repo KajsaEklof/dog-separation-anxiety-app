@@ -7,36 +7,41 @@
         <v-textarea v-model="editContent" placeholder="Thing that I must remember..." variant="solo" class="plain-text-input" ></v-textarea>
       </v-card-text>
       <v-card-actions>
-        <v-btn @click="cancel">Cancel</v-btn>
-        <v-btn @click="saveNote">Save</v-btn>
+        <v-btn variant="outlined" @click="cancel">Cancel</v-btn>
+        <v-btn color="primary" variant="elevated" :loading="isSaving" @click="saveNote">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref, watch } from 'vue';
+import { defineProps, defineEmits, ref, watch } from 'vue';
 import { useUiStore } from "@/stores/UiStore";
 import { useDogStore } from "@/stores/DogStore";
-import { supabase } from '@/supabase';
+import useNotes from "@/composables/Notes";
 
 const props = defineProps({
   title: { type: String, required: true },
   content: { type: String, required: true },
   id: { type: String, required: true },
   })
+const emit = defineEmits(['updateNote'])
 
 const store = useUiStore();
 const dogStore = useDogStore();
+const { createOrUpdateNote } = useNotes();
   
 const editTitle = ref(props.title);
 const editContent = ref(props.content);
 const isEditing = ref(props.id !== '');
+const isSaving = ref(false);
 
 watch(() => store.showNoteEditorDialog, (show) => {
   if (show) {
     editTitle.value = props.title;
     editContent.value = props.content;
+  } else {
+    isSaving.value = false;
   }
 })
 
@@ -44,12 +49,28 @@ function cancel() {
   store.setShowNotesEditorDialog(false);
 }
 
-async function saveNote() {
-  const call = await supabase.from('notes').upsert({
-    id: props.id,
-    title: editTitle.value,
-    content: editContent.value,
-    pet_id: dogStore.pet.id,
-  });
+async function saveNote() {  
+  isSaving.value = true;
+
+  try {
+    await createOrUpdateNote({
+      id: props.id,
+      title: editTitle.value,
+      content: editContent.value,
+      pet_id: dogStore.pet.id,
+    });
+    
+    emit('updateNote', {
+      id: props.id,
+      title: editTitle.value,
+      content: editContent.value,
+    });
+    // isSaving.value = false;
+    // store.setShowNotesEditorDialog(false);
+  } catch (error) {
+    console.error('error', error);
+
+    // TODO display error
+  }
 }
 </script>
