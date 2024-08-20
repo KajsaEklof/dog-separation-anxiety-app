@@ -1,12 +1,15 @@
 <template>
   <v-dialog v-model="store.showNoteEditorDialog" scrollable persistent fullscreen>
-    <v-card>
-      <v-card-title>{{ isEditing ? 'Edit' : 'Add'}} note</v-card-title>
-      <v-card-text>
-        <v-text-field v-model="editTitle"  placeholder="Title" variant="solo" class="plain-text-input title"></v-text-field>
-        <v-textarea v-model="editContent" placeholder="Thing that I must remember..." variant="solo" class="plain-text-input" ></v-textarea>
+    <v-card class="pa-8">
+      <v-card-title class="pl-0">
+        <!-- {{ isEditing ? 'Edit' : 'Add'}} note -->
+        <v-text-field v-model="editTitle"  placeholder="Title" variant="solo" class="plain-text-input title" hide-details></v-text-field>
+      </v-card-title>
+      <v-card-text class="pl-0 pt-0">
+        <v-textarea v-model="editContent" placeholder="Thing that I must remember..." variant="solo" class="plain-text-input" auto-grow></v-textarea>
       </v-card-text>
-      <v-card-actions>
+      <v-card-actions class="pa-4">
+        <v-spacer />
         <v-btn variant="outlined" @click="cancel">Cancel</v-btn>
         <v-btn color="primary" variant="elevated" :loading="isSaving" @click="saveNote">Save</v-btn>
       </v-card-actions>
@@ -25,7 +28,7 @@ const props = defineProps({
   content: { type: String, required: true },
   id: { type: String, required: true },
   })
-const emit = defineEmits(['updateNote'])
+const emit = defineEmits(['updateNote', 'cancel']);
 
 const store = useUiStore();
 const dogStore = useDogStore();
@@ -46,6 +49,7 @@ watch(() => store.showNoteEditorDialog, (show) => {
 })
 
 function cancel() {
+  emit('cancel');
   store.setShowNotesEditorDialog(false);
 }
 

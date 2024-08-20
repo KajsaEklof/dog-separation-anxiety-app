@@ -9,25 +9,28 @@
       </v-col>
     </v-row>
     <div class="masonry-layout container masonary_container">
-      <v-card v-for="( note, index) in notes" :key="index" class="item" elevation="2" hover @click="openNoteEditor(note)">
-        <v-card-title>{{ note.title }}</v-card-title>
-        <v-card-text>{{ note.content }}</v-card-text>
+        <v-card v-for="( note, index) in notes" :key="index" class="item" elevation="2" hover @click="openNoteEditor(note)">
+          <v-card-title>{{ note.title }}</v-card-title>
+        <v-card-text>
+          {{ note.content }}
+
+          updated at: {{ formatDate(note.updated_at) }}
+        </v-card-text>
       </v-card>
     </div>
-   <note-editor-dialog :title="title"  :content="content" :id="noteId" @update-note="updateNote"/>
+   <note-editor-dialog :title="title"  :content="content" :id="noteId" @update-note="updateNote" @cancel="updateLayout"/>
   </v-container>
 </template>
 
 <script lang="ts" setup>
 import MiniMasonry from 'minimasonry';
-import { Ref, onMounted, ref } from 'vue';
+import { Ref, onMounted, ref, nextTick } from 'vue';
 import { v4 as uuidv4 } from 'uuid';
 import NoteEditorDialog from '@/components/NoteEditorDialog.vue';
 import { useUiStore } from "@/stores/UiStore";
 import { useDogStore } from "@/stores/DogStore";
 import usePetIdentity from "@/composables/DogIdentity";
 import useNotes from "@/composables/Notes";
-
 
 interface Note {
   [x: string]: string;
@@ -41,9 +44,10 @@ const title = ref('');
 const content = ref('');
 const noteId = ref('');
 const notes: Ref<Note[]> = ref([]);
+let masonary: any = undefined;
 
 onMounted(async () => {
-  const masonary = new MiniMasonry({
+  masonary = new MiniMasonry({
     container: '.masonary_container',
     baseWidth: 150
   });
@@ -56,14 +60,28 @@ onMounted(async () => {
       petId = pet.id;
     }
   }
-  
+
   // get the notes from Supabase
   // TOOD: handle errors
   const data = await getNotes(petId);
   if (data && data.length > 0) {
     notes.value = data;
+
+    console.log('data', data);
+    nextTick(() => {
+      updateLayout();
+    });
   }
+
 })
+
+function updateLayout() {
+  masonary.layout();
+}
+
+function formatDate(date: string) {
+  return new Date(date).toLocaleDateString();
+}
 
 function addNote() {
   title.value = '';
@@ -88,9 +106,12 @@ function updateNote(note: Note) {
     notes.value[noteIndex] = note;
   } else {
     // Otherwise, add it to the list
-    notes.value.push(note);
+    notes.value.unshift(note);
   }
 
   uiStore.setShowNotesEditorDialog(false);
+  nextTick(() => {
+    updateLayout();
+  });
 }
 </script>
