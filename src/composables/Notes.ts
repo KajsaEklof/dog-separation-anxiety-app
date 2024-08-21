@@ -35,11 +35,13 @@ export default function useNotes() {
     }
   };
 
-  // const updateNote = async ({ title, content, id }: IUpdateNoteOptions) => {};
+  const deleteNote = async (id: string) => {
+    const call = await supabase.from('notes').delete().eq('id', id);
 
-  // const deleteNote = async (id: string) => {};
+    if (call.error) {
+      throw new Error(call.error.message);
+    }
+  };
 
-
-  // return { getNotes, createNote, updateNote, deleteNote };
-  return { getNotes, createOrUpdateNote };
+  return { getNotes, createOrUpdateNote, deleteNote };
 }

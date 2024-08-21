@@ -1,9 +1,12 @@
 <template>
   <v-dialog v-model="store.showNoteEditorDialog" scrollable persistent fullscreen>
     <v-card class="pa-8">
-      <v-card-title class="pl-0">
+      <v-card-title class="pl-0 d-flex align-center">
         <!-- {{ isEditing ? 'Edit' : 'Add'}} note -->
         <v-text-field v-model="editTitle"  placeholder="Title" variant="solo" class="plain-text-input title" hide-details></v-text-field>
+        <v-btn icon variant="flat" @click="removeNote">
+          <v-icon>mdi-delete</v-icon>
+        </v-btn>
       </v-card-title>
       <v-card-text class="pl-0 pt-0">
         <v-textarea v-model="editContent" placeholder="Thing that I must remember..." variant="solo" class="plain-text-input" auto-grow></v-textarea>
@@ -28,16 +31,16 @@ const props = defineProps({
   content: { type: String, required: true },
   id: { type: String, required: true },
   })
-const emit = defineEmits(['updateNote', 'cancel']);
+const emit = defineEmits(['updateNote', 'cancel', 'deleteNote']);
 
 const store = useUiStore();
 const dogStore = useDogStore();
-const { createOrUpdateNote } = useNotes();
+const { createOrUpdateNote, deleteNote } = useNotes();
   
 const editTitle = ref(props.title);
 const editContent = ref(props.content);
-const isEditing = ref(props.id !== '');
 const isSaving = ref(false);
+// const isEditing = ref(props.id !== '');
 
 watch(() => store.showNoteEditorDialog, (show) => {
   if (show) {
@@ -75,6 +78,24 @@ async function saveNote() {
     console.error('error', error);
 
     // TODO display error
+  }
+}
+
+async function removeNote() {
+  if (props.id === '') {
+    return;
+  }
+
+// TODO: confirm dialog
+
+  try {
+    await deleteNote(props.id);
+
+    emit('deleteNote', props.id);
+  } catch (error) {
+    console.error('error', error);
+
+    // TODO: display error 
   }
 }
 </script>

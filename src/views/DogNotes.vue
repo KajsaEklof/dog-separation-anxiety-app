@@ -18,7 +18,14 @@
         </v-card-text>
       </v-card>
     </div>
-   <note-editor-dialog :title="title"  :content="content" :id="noteId" @update-note="updateNote" @cancel="updateLayout"/>
+   <note-editor-dialog
+    :title="title"
+    :content="content"
+    :id="noteId"
+    @update-note="updateNote"
+    @cancel="updateLayout"
+    @delete-note="deleteNote"
+  />
   </v-container>
 </template>
 
@@ -107,6 +114,19 @@ function updateNote(note: Note) {
   } else {
     // Otherwise, add it to the list
     notes.value.unshift(note);
+  }
+
+  uiStore.setShowNotesEditorDialog(false);
+  nextTick(() => {
+    updateLayout();
+  });
+}
+
+function deleteNote(id: string) {
+  const noteIndex = notes.value.findIndex((n) => n.id === id);
+
+  if (noteIndex !== -1) {
+    notes.value.splice(noteIndex, 1);
   }
 
   uiStore.setShowNotesEditorDialog(false);
