@@ -12,9 +12,12 @@
         <v-card v-for="( note, index) in notes" :key="index" class="item" elevation="2" hover @click="openNoteEditor(note)">
           <v-card-title>{{ note.title }}</v-card-title>
         <v-card-text>
-          {{ note.content }}
-
-          updated at: {{ formatDate(note.updated_at) }}
+          <p class="mb-4">
+            {{ note.content }}
+          </p>
+          <i>
+            updated: {{ formatDate(note.updated_at) }}
+          </i>
         </v-card-text>
       </v-card>
     </div>
@@ -38,6 +41,7 @@ import { useUiStore } from "@/stores/UiStore";
 import { useDogStore } from "@/stores/DogStore";
 import usePetIdentity from "@/composables/DogIdentity";
 import useNotes from "@/composables/Notes";
+import { DateTime } from 'luxon';
 
 interface Note {
   [x: string]: string;
@@ -74,7 +78,7 @@ onMounted(async () => {
   if (data && data.length > 0) {
     notes.value = data;
 
-    console.log('data', data);
+    // console.log('data', data);
     nextTick(() => {
       updateLayout();
     });
@@ -87,6 +91,15 @@ function updateLayout() {
 }
 
 function formatDate(date: string) {
+  const originalDate = new Date(date);
+  const now = new Date().getTime();
+  const timeStamp = originalDate.getTime();
+
+  if (now - timeStamp < 1000 * 60 * 60 * 24) {
+    const luxonDate = DateTime.fromJSDate(originalDate);
+    return luxonDate.toRelative();
+  }
+
   return new Date(date).toLocaleDateString();
 }
 

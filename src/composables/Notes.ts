@@ -15,7 +15,7 @@ export interface IAddNoteOptions {
 export default function useNotes() {
   const getNotes = async (petId: string): Promise<INoteData[] | null> => {
     // get the notes from Supabase
-    const call = await supabase.from('notes').select('*').eq('pet_id', petId);
+    const call = await supabase.from('notes').select('*').eq('pet_id', petId).order('updated_at', { ascending: false });
     const data = call.data;
 
     return data;

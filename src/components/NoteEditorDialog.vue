@@ -56,6 +56,12 @@ function cancel() {
   store.setShowNotesEditorDialog(false);
 }
 
+function fixSeconds(date: Date) {
+  date.setSeconds(date.getSeconds() + 1);
+  return date;
+}
+
+
 async function saveNote() {  
   isSaving.value = true;
 
@@ -66,14 +72,16 @@ async function saveNote() {
       content: editContent.value,
       pet_id: dogStore.pet.id,
     });
-    
+
+    const date = fixSeconds(new Date());
+    const updatedAt = date.toISOString().replace('Z', '+00:00');
+
     emit('updateNote', {
       id: props.id,
       title: editTitle.value,
       content: editContent.value,
+      updated_at: updatedAt,
     });
-    // isSaving.value = false;
-    // store.setShowNotesEditorDialog(false);
   } catch (error) {
     console.error('error', error);
 
