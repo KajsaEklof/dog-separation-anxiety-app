@@ -1,5 +1,6 @@
 <template>
   <v-container>
     <h1>Health</h1>
-    </v-container>
+    <weight-chart />
+  </v-container>
 </template>
