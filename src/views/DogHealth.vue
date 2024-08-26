@@ -4,3 +4,8 @@
     <weight-chart />
   </v-container>
 </template>
+
+
+<script setup lang="ts">
+import WeightChart from "@/components/WeightChart.vue"
+</script>
