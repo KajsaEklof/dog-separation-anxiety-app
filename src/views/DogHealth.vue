@@ -8,17 +8,17 @@
         <v-btn color="primary" class="mt-8" @click="addWeightEntry">Add weight entry</v-btn>
       </v-col>
     </v-row>
-    <weight-chart />
+    <weight-chart :labels="labels" :data="weightData" />
   </v-container>
 </template>
 
 
 <script setup lang="ts">
-import { ref } from "vue"
+import { Ref, ref } from "vue"
 import WeightChart from "@/components/WeightChart.vue"
-import { supabase } from "@/supabase";
 import { useDogStore } from "@/stores/DogStore";
 import usePetIdentity from "@/composables/DogIdentity";
+import useHealthWeight from "@/composables/HealthWeight";
 import { onMounted } from "vue";
 
 const weight = ref(0)
@@ -26,6 +26,9 @@ const entryDate = ref(new Date())
 
 const dogStore = useDogStore();
 const { getPet } = usePetIdentity();
+const { getWeightEntries, addEntry } = useHealthWeight();
+const labels: Ref<string[]> = ref([]);
+const weightData: Ref<number[]> = ref([]);
 
 onMounted(async () => {
   let petId = dogStore.pet.id;
@@ -37,31 +40,27 @@ onMounted(async () => {
     }
   }
 
-  getWeightEntries();
+  getEntries(petId);
 })
 
-async function getWeightEntries() {
+async function getEntries(petId: string) {
   // Get weight entries
-  const { data, error } = await supabase
-    .from('health_weight')
-    .select('weight, created_at')
-    .eq('pet_id', dogStore.pet.id)
-    .order('created_at', { ascending: true });
-
-  if (error) {
-    console.error('Error fetching weight entries:', error.message);
-  } else {
-    console.log('Weight entries:', data);
-  }
+  const data = await getWeightEntries(petId);
+  const newLabels: string[] = [];
+  const weightEntryData: number[] = [];
 
   data?.forEach((entry: any) => {
     // add the weight entry to the chart data
+    newLabels.push(new Date(entry.created_at).toLocaleDateString());
+    weightEntryData.push(entry.weight);
   });
+
+  labels.value = newLabels;
+  weightData.value = weightEntryData;
 }
 
 async function addWeightEntry() {
   // Add weight entry
-  console.log(entryDate.value, weight.value);
   let petId = dogStore.pet.id;
   if (!petId || petId === '') {
     const pet = await getPet();
@@ -71,26 +70,7 @@ async function addWeightEntry() {
     }
   }
 
-  const inputDate = entryDate.value
-
-  // Step 1: Extract the components needed
-const year = inputDate.getUTCFullYear();
-const month = String(inputDate.getMonth() + 1).padStart(2, '0');
-const day = String(inputDate.getDate()).padStart(2, '0');
-const hours = String(inputDate.getHours()).padStart(2, '0');
-const minutes = String(inputDate.getMinutes()).padStart(2, '0');
-const seconds = String(inputDate.getSeconds()).padStart(2, '0');
-const milliseconds = String(inputDate.getMilliseconds()).padStart(3, '0').slice(0, 2); // Take first two digits of milliseconds
-
-// Step 2: Format the date to the desired format
-  const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}+00`;
-
-  const call = await supabase.from('health_weight').insert({
-        pet_id: petId,
-        weight: weight.value,
-        created_at: entryDate.value.toISOString(),
-      });
-
-      console.log('call', call);
+  // TODO handle errors wrap this in try catch
+  const call = await addEntry({petId, weight: weight.value, createdAt: entryDate.value.toISOString()});
 } 
 </script>

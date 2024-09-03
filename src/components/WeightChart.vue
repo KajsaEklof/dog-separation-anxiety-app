@@ -15,7 +15,7 @@ import {
 } from 'chart.js'
 import { Line } from 'vue-chartjs'
 import { useDogStore } from "@/stores/DogStore";
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, defineProps, watch } from 'vue';
 import usePetIdentity from "@/composables/DogIdentity";
 
 ChartJS.register(
@@ -27,6 +27,11 @@ ChartJS.register(
   Tooltip,
   Legend
 )
+
+const props = defineProps({
+  labels: { type: Array as () => string[], required: true },
+  data: { type: Array as () => number[], required: true },
+})
 
 const dogStore = useDogStore();
 const lineChart = ref(null);
@@ -54,21 +59,16 @@ onMounted(async () => {
   if (!dogStore.pet.id || dogStore.pet.weight == '') {
     await getPet();
   }
-  
-  if (dogStore.pet.weight != '') {
-    const dogWeight = parseInt(dogStore.pet.weight);
+})
 
-    // const index = data.datasets[0].data.indexOf(dogWeight);
-    const chart = ChartJS.getChart("lineChart");
-    if (chart) {
-      // add all the weight entries to the chart
-      // if there are weight entries, add them all
+// when the labels prop changes, update the chart
+watch(() => props.labels, () => {
+  const chart = ChartJS.getChart("lineChart");
+  if (chart) {
+    chart.data.labels = props.labels;
+    chart.data.datasets[0].data = props.data;
 
-      // if there are no weight entries, add the first one
-      chart.data.datasets[0].data = [dogWeight];
-
-      chart.update();
-    }
+    chart.update();
   }
 })
 

@@ -30,7 +30,7 @@ const props = defineProps({
   title: { type: String, required: true },
   content: { type: String, required: true },
   id: { type: String, required: true },
-  })
+})
 const emit = defineEmits(['updateNote', 'cancel', 'deleteNote']);
 
 const store = useUiStore();
