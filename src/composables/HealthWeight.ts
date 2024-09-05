@@ -23,7 +23,7 @@ export default function useHealthWeight() {
     if (error) {
       console.error('Error fetching weight entries:', error.message);
     } else {
-      console.log('Weight entries:', data);
+      // console.log('Weight entries:', data);
     }
 
     return data;

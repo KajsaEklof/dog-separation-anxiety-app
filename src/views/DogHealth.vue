@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <h1>Health</h1>
+    <weight-chart :labels="labels" :data="weightData" class="mb-8"/>
     <v-row>
       <v-col class="d-flex flex-wrap flex-column justify-start mt-4 mb-8" >
         <v-date-input v-model="entryDate" label="Date" variant="outlined" hide-details />
@@ -8,7 +9,6 @@
         <v-btn color="primary" class="mt-8" @click="addWeightEntry">Add weight entry</v-btn>
       </v-col>
     </v-row>
-    <weight-chart :labels="labels" :data="weightData" />
   </v-container>
 </template>
 
