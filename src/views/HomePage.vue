@@ -22,7 +22,7 @@
     <v-row>
       <v-col class="d-flex flex-column justify-center align-center">
         <h2 v-if="!hasPet">Add your pooch to get started!</h2>
-        <v-btn append-icon="mdi-plus" class="mt-4" color="primary" @click="openDogDetailsDialog">Add dog</v-btn>
+        <v-btn append-icon="mdi-plus" class="mt-4" color="primary" block @click="openDogDetailsDialog">Add dog</v-btn>
         </v-col>
     </v-row>
     <dog-details-dialog :show-dialog="true" />

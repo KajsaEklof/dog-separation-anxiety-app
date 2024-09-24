@@ -10,13 +10,13 @@
     </v-row>
     <v-row>
       <v-col>
-        <v-btn color="primary" @click="addWeightEntry">Add weight entry</v-btn>
+        <v-btn color="primary" block @click="addWeightEntry">Add weight entry</v-btn>
     </v-col>
     </v-row>
     <v-row>
       <v-col>
         <h2>Medicine</h2>
-        <v-btn color="primary">Add medicine</v-btn>
+        <v-btn color="primary" block>Add medicine</v-btn>
       </v-col>
     </v-row>
   </v-container>
