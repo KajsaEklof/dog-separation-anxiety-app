@@ -10,35 +10,40 @@
     </v-row>
     <v-row>
       <v-col>
-        <v-btn color="primary" block @click="addWeightEntry">Add weight entry</v-btn>
+        <v-btn color="primary" block @click="addWeight">Add weight entry</v-btn>
     </v-col>
     </v-row>
     <v-row>
       <v-col>
         <h2>Medicine</h2>
-        <v-btn color="primary" block>Add medicine</v-btn>
+        <v-btn color="primary" block @click="addMedicine">Add medicine</v-btn>
       </v-col>
     </v-row>
+    <dog-medicine-dialog :id="medicineId" />
   </v-container>
 </template>
 
 
 <script setup lang="ts">
-import { Ref, ref } from "vue"
+import { Ref, ref, onMounted} from "vue"
 import WeightChart from "@/components/WeightChart.vue"
+import { useUiStore } from "@/stores/UiStore";
 import { useDogStore } from "@/stores/DogStore";
 import usePetIdentity from "@/composables/DogIdentity";
-import useHealthWeight from "@/composables/HealthWeight";
-import { onMounted } from "vue";
+import useHealth from "@/composables/DogHealth";
+import DogMedicineDialog from '@/components/DogMedicineDialog.vue';
 
 const weight = ref(0)
 const entryDate = ref(new Date())
 
+const uiStore = useUiStore();
 const dogStore = useDogStore();
 const { getPet } = usePetIdentity();
-const { getWeightEntries, addEntry } = useHealthWeight();
+const { getWeightEntries, addWeightEntry } = useHealth();
 const labels: Ref<string[]> = ref([]);
 const weightData: Ref<number[]> = ref([]);
+
+const medicineId = ref('');
 
 onMounted(async () => {
   let petId = dogStore.pet.id;
@@ -69,7 +74,7 @@ async function getEntries(petId: string) {
   weightData.value = weightEntryData;
 }
 
-async function addWeightEntry() {
+async function addWeight() {
   // Add weight entry
   let petId = dogStore.pet.id;
   if (!petId || petId === '') {
@@ -81,6 +86,28 @@ async function addWeightEntry() {
   }
 
   // TODO handle errors wrap this in try catch
-  const call = await addEntry({petId, weight: weight.value, createdAt: entryDate.value.toISOString()});
+  const call = await addWeightEntry({petId, weight: weight.value, createdAt: entryDate.value.toISOString()});
 } 
+
+function addMedicine() {
+  // title.value = '';
+  // content.value = '';
+  // noteId.value = uuidv4();
+  uiStore.setShowMedicineDialog(true);
+}
+
+// async function addMedicineEntry() {
+//   // Add weight entry
+//   let petId = dogStore.pet.id;
+//   if (!petId || petId === '') {
+//     const pet = await getPet();
+
+//     if (pet) {
+//       petId = pet.id;
+//     }
+//   }
+
+//   // TODO handle errors wrap this in try catch
+//   const call = await addMedicineEntry({petId, medicineName: weight.value, createdAt: entryDate.value.toISOString()});
+// } 
 </script>
