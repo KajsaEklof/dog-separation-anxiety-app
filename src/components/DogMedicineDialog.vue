@@ -12,12 +12,11 @@
         <v-text-field label="Name" variant="outlined" />
         <v-text-field label="Dosage" variant="outlined" />
         <v-text-field label="Frequency" variant="outlined" />
-        <!-- <v-textarea v-model="editContent" placeholder="Thing that I must remember..." variant="solo" class="plain-text-input" auto-grow></v-textarea> -->
       </v-card-text>
       <v-card-actions class="pa-4">
         <v-spacer />
         <v-btn variant="outlined" @click="cancel">Cancel</v-btn>
-        <!-- <v-btn color="primary" variant="elevated" :loading="isSaving" @click="saveNote">Save</v-btn> -->
+        <v-btn color="primary" variant="elevated" :loading="isSaving" @click="saveMedicine">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -34,16 +33,47 @@ const props = defineProps({
   // content: { type: String, required: true },
   id: { type: String, required: true },
 })
-const emit = defineEmits(['updateNote', 'cancel', 'deleteMedicine']);
+const emit = defineEmits(['updateMedicine', 'cancel', 'deleteMedicine']);
 
 const store = useUiStore();
 // const dogStore = useDogStore();
 const { removeMedicineEntry } = useHealth();
-const isEditing = ref(false);3
+const isEditing = ref(false);
+const isSaving = ref(false);
 
 function cancel() {
-  // emit('cancel');
+  emit('cancel');
   store.setShowMedicineDialog(false);
+}
+
+function fixSeconds(date: Date) {
+  date.setSeconds(date.getSeconds() + 1);
+  return date;
+}
+
+async function saveMedicine() {  
+  isSaving.value = true;
+
+  try {
+    // await createOrUpdateMedicine({
+    //   id: props.id,
+    //   title: editTitle.value,
+    //   content: editContent.value,
+    //   pet_id: dogStore.pet.id,
+    // });
+
+    const date = fixSeconds(new Date());
+    const updatedAt = date.toISOString().replace('Z', '+00:00');
+
+    emit('updateMedicine', {
+      id: props.id,
+      updated_at: updatedAt,
+    });
+  } catch (error) {
+    console.error('error', error);
+
+    // TODO display error
+  }
 }
 
 async function removeMedicine() {
